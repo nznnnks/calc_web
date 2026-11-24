@@ -1,0 +1,36 @@
+import 'package:go_router/go_router.dart';
+
+import 'screens/home_screen.dart';
+import 'screens/calculator_screen.dart';
+import 'screens/converter_screen.dart';
+import 'screens/result_screen.dart';
+import 'screens/not_found_screen.dart';
+
+GoRouter createRouter({String? initialLocation}) => GoRouter(
+  initialLocation: initialLocation,
+  routes: [
+    GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+    GoRoute(
+      path: '/calculator',
+      builder: (context, state) => const CalculatorScreen(),
+      routes: [
+        GoRoute(
+          path: 'result',
+          builder: (context, state) => const ResultScreen(),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/converter',
+      builder: (context, state) => const ConverterScreen(),
+      routes: [
+        GoRoute(
+          path: 'result',
+          builder: (context, state) => const ResultScreen(),
+        ),
+      ],
+    ),
+  ],
+  errorBuilder: (context, state) => NotFoundScreen(location: state.uri.toString()),
+);
+final appRouter = createRouter();
